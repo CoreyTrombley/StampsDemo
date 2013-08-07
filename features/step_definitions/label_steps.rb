@@ -4,10 +4,10 @@ Given /^I am on the shipping label printing page$/ do
 end
 
 Given /^I request a label for a "(.*?)" weighing "(.*?)" from "(.*?)" to "(.*?)"$/ do |product, weight, from, to|
-  fill_in "Item", :with => product
-  fill_in "Weight", :with => weight
-  fill_in "From Address", :with => from
-  fill_in "To Address", :with => to
+  fill_in :item, :with => product
+  fill_in :Weight, :with => weight
+  fill_in :from, :with => from
+  fill_in :to, :with => to
 end
 
 When /^I press "(.*?)"$/ do |value|
