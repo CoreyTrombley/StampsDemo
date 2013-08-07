@@ -1,4 +1,7 @@
 StampsDemo::Application.routes.draw do
+  resources :shipping_labels
+
+
   resources :addresses
 
 
