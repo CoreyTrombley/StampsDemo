@@ -2,7 +2,10 @@
 
 <table>
   <tr>
-    <th>Url</th>
+    <th>Item</th>
+    <th>Weight</th>
+    <th>From</th>
+    <th>To</th>
     <th></th>
     <th></th>
     <th></th>
@@ -10,7 +13,10 @@
 
 <% @shipping_labels.each do |shipping_label| %>
   <tr>
-    <td><%= shipping_label.url %></td>
+    <td><%= shipping_label.item %></td>
+    <td><%= shipping_label.weight %></td>
+    <td><%= shipping_label.from %></td>
+    <td><%= shipping_label.to %></td>
     <td><%= link_to 'Show', shipping_label %></td>
     <td><%= link_to 'Edit', edit_shipping_label_path(shipping_label) %></td>
     <td><%= link_to 'Destroy', shipping_label, method: :delete, data: { confirm: 'Are you sure?' } %></td>

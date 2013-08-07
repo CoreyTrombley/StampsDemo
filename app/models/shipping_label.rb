@@ -1,3 +1,3 @@
 class ShippingLabel < ActiveRecord::Base
-  attr_accessible :url
+  attr_accessible :from, :item, :to, :weight
 end
