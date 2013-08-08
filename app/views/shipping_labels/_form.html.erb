@@ -27,6 +27,21 @@
     <%= f.label :to %><br />
     <%= f.text_field :to %>
   </div>
+
+  <h3>From Address</h3>
+  <%= f.fields_for :from_address do |a| %>
+    <%= a.label :full_name %><br />
+    <%= a.text_field :full_name %>
+
+    <!-- TODO Fill in with other attributes -->
+  <% end %>
+
+  <h3>To Address</h3>
+  <%= f.fields_for :to_address do |a| %>
+    <%= a.label :full_name %><br />
+    <%= a.text_field :full_name %>
+  <% end %>
+
   <div class="actions">
     <%= f.submit 'Print Label' %>
   </div>

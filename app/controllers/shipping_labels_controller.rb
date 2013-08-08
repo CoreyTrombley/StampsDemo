@@ -25,6 +25,8 @@ class ShippingLabelsController < ApplicationController
   # GET /shipping_labels/new.json
   def new
     @shipping_label = ShippingLabel.new
+    @shipping_label.from_address = Address.new
+    @shipping_label.to_address = Address.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,8 +42,7 @@ class ShippingLabelsController < ApplicationController
   # POST /shipping_labels
   # POST /shipping_labels.json
   def create
-    @shipping_info = params
-    binding.pry
+
     @shipping_label = ShippingLabel.new(params[:shipping_label])
 
     respond_to do |format|
