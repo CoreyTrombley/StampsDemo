@@ -13,7 +13,11 @@
   <h3>Package Deatails</h3>
   <div class="field">
     <%= f.label :item, "Type" %><br />
-    <%= f.text_field :item %>
+    <%= f.select :item, Stamps::Types::PACKAGE %>
+  </div>
+  <div class="field">
+    <%= f.label :service_type, "Type" %><br />
+    <%= f.select :service_type, Stamps::Types::SERVICE %>
   </div>
   <div class="field">
     <%= f.label :weight %><br />

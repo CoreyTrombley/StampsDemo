@@ -3,7 +3,7 @@ class ShippingLabel < ActiveRecord::Base
   belongs_to :to_address, :class_name => 'Address', :foreign_key => :to_address_id
   belongs_to :shipping_rate #TODO - Make a model called ShippingRate
 
-  attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date
+  attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type
 
   accepts_nested_attributes_for :from_address, :to_address
 
@@ -13,37 +13,37 @@ class ShippingLabel < ActiveRecord::Base
 
   def make_label
     rates = Stamps.get_rates(
-      :from_zip_code => '45440',
-      :to_zip_code   => '20500',
-      :weight_lb     => '0.5',
-      :ship_date     => self.ship_date
+      :from_zip_code => self.from_address.zip_code,
+      :to_zip_code   => self.to_address.zip_code,
+      :weight_lb     => self.weight,
+      :ship_date     => self.ship_date,
+      :package_type  => self.item
     )
 
     stamp = Stamps.create!({
     :transaction_id  => "RANDOM_STRING",
     :tracking_number => true,
     :to => {
-      #:full_name   => this.from_address.full_name,
-      :full_name   => 'Corey Trombley',
-      :address1    => '3025 81st street',
-      :city        => 'East Elmhurst',
-      :state       => 'NY',
-      :zip_code    => '11370'
+      :full_name   => self.to_address.full_name,
+      :address1    => self.to_address.address1,
+      :city        => self.to_address.city,
+      :state       => self.to_address.state,
+      :zip_code    => self.to_address.zip_code
     },
     :from => {
-      :full_name   => 'Littlelines',
-      :address1    => '50 Chestnut Street',
-      :address2    => 'Suite 234',
-      :city        => 'Beavervcreek',
-      :state       => 'OH',
-      :zip_code    => '45440'
+      :full_name   => self.from_address.full_name,
+      :address1    => self.from_address.address1,
+      :address2    => self.from_address.address2,
+      :city        => self.from_address.city,
+      :state       => self.from_address.state,
+      :zip_code    => self.from_address.zip_code
     },
     :rate          => {
-      :from_zip_code => '45440',
-      :to_zip_code   => '11370',
-      :weight_oz     => this.weight,
-      :ship_date     => Date.today.strftime('%Y-%m-%d'),
-      :package_type  => 'Package',
+      :from_zip_code => self.from_address.zip_code,
+      :to_zip_code   => self.to_address.zip_code,
+      :weight_oz     => self.weight,
+      :ship_date     => self.ship_date,
+      :package_type  => self.item,
       :service_type  => 'US-FC',
       :cod_value     => 10.00,
       :add_ons       => {
