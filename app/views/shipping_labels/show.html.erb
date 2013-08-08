@@ -1,25 +1,2 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Item:</b>
-  <%= @shipping_label.item %>
-</p>
-
-<p>
-  <b>Weight:</b>
-  <%= @shipping_label.weight %>
-</p>
-
-<p>
-  <b>From:</b>
-  <%= @shipping_label.from %>
-</p>
-
-<p>
-  <b>To:</b>
-  <%= @shipping_label.to %>
-</p>
-
-
-<%= link_to 'Edit', edit_shipping_label_path(@shipping_label) %> |
-<%= link_to 'Back', shipping_labels_path %>
+<h4>Label</h4>
+<%=img_tag @stamp.label_url%>

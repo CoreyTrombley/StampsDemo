@@ -1,58 +1,67 @@
-<h1>Listing shipping_labels</h1>
+<h1>Shipping information</h1>
 
-<table>
-  <tr>
-    <th>Item</th>
-    <th>Weight</th>
-    <th>From</th>
-    <th>To</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @shipping_labels.each do |shipping_label| %>
-  <tr>
-    <td><%= shipping_label.item %></td>
-    <td><%= shipping_label.weight %></td>
-    <td><%= shipping_label.from %></td>
-    <td><%= shipping_label.to %></td>
-    <td><%= link_to 'Show', shipping_label %></td>
-    <td><%= link_to 'Edit', edit_shipping_label_path(shipping_label) %></td>
-    <td><%= link_to 'Destroy', shipping_label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Shipping label', new_shipping_label_path %>
-
-
-<%= form_tag do %>
-  <div>
-    <%= label_tag(:full_name, "Full Name") %>
-    <%= text_field_tag(:full_name) %>
-  </div>
-  <div>
-    <%= label_tag(:address1, "Address") %>
-    <%= text_field_tag(:address1) %>
-  </div>
-  <div>
-    <%= label_tag(:city, "City") %>
-    <%= text_field_tag(:city) %>
-  </div>
-  <div>
-    <%= label_tag(:state, "State") %>
-    <%= text_field_tag(:state) %>
-  </div>
-  <div>
-    <%= label_tag(:zip, "Zip Code") %>
-    <%= text_field_tag(:zip) %>
-  </div>
-  <%= submit_tag "Print Label" %>
-<% end %>
-
+<div>
+  <%= form_tag({:controller => :shipping_labels, :action => :create}) do %>
+    <div class="ToAddress">
+      <h4>To Address</h4>
+      <div>
+        <%= label_tag(:to_full_name, "Full Name") %>
+        <%= text_field_tag(:to_full_name) %>
+      </div>
+      <div>
+        <%= label_tag(:to_address1, "Address") %>
+        <%= text_field_tag(:to_address1) %>
+      </div>
+      <div>
+        <%= label_tag(:to_city, "City") %>
+        <%= text_field_tag(:to_city) %>
+      </div>
+      <div>
+        <%= label_tag(:to_state, "State") %>
+        <%= text_field_tag(:to_state) %>
+      </div>
+      <div>
+        <%= label_tag(:to_zip, "Zip Code") %>
+        <%= text_field_tag(:to_zip) %>
+      </div>
+    </div>
+    <div class="FromAddress">
+      <h4>From Address</h4>
+      <div>
+        <%= label_tag(:from_full_name, "Full Name") %>
+        <%= text_field_tag(:from_full_name) %>
+      </div>
+      <div>
+        <%= label_tag(:from_address1, "Address") %>
+        <%= text_field_tag(:from_address1) %>
+      </div>
+      <div>
+        <%= label_tag(:from_city, "City") %>
+        <%= text_field_tag(:from_city) %>
+      </div>
+      <div>
+        <%= label_tag(:from_state, "State") %>
+        <%= text_field_tag(:from_state) %>
+      </div>
+      <div>
+        <%= label_tag(:from_zip, "Zip Code") %>
+        <%= text_field_tag(:from_zip) %>
+      </div>
+    </div>
+    <div class="rate">
+      <h4>Rate</h4>
+      <div>
+        <%= label_tag(:weight, "Weight Oz") %>
+        <%= text_field_tag(:weight) %>
+      </div>
+      <div>
+        <%= label_tag :package_type, "Type" %>
+        <%= text_field_tag :package_type %>
+      </div>
+    </div>
+    <%= submit_tag "Print Label" %>
+  <% end %>
+</div>
 <h4>Format</h4>
 <p>stamp = Stamps.create!({
     :transaction_id  => "RANDOM_STRING",

@@ -40,6 +40,8 @@ class ShippingLabelsController < ApplicationController
   # POST /shipping_labels
   # POST /shipping_labels.json
   def create
+    @shipping_info = params
+    binding.pry
     @shipping_label = ShippingLabel.new(params[:shipping_label])
 
     respond_to do |format|
