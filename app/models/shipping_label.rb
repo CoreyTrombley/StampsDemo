@@ -51,18 +51,18 @@ class ShippingLabel < ActiveRecord::Base
       :weight_oz     => self.weight,
       :ship_date     => self.ship_date,
       :package_type  => self.item,
-      :service_type  => self.service_type,
-      :cod_value     => 10.00,
-      :add_ons       => {
-        :add_on => [
-          { :type => 'US-A-COD' },
-          { :type => 'US-A-DC' }
-        ]
-      }
+      :service_type  => self.service_type
+      #:cod_value     => 10.00,
+      # :add_ons       => {
+      #   :add_on => [
+      #     { :type => 'US-A-COD' },
+      #     { :type => 'US-A-DC' }
+      #   ]
+      # }
     }
   }
 )
 
-    self.label_url = stamp.url
+    self.label_url = stamp[:url]
   end
 end
