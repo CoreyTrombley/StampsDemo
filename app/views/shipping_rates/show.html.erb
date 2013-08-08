@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+
+
+
+<h3>Rates</h3>
+<div>
+  <% @shipping_rate.get_rates.each do |rate| %>
+    <div>
+      Amount: <%= rate[:amount] %> dolars
+      <br>
+      Travel time: <%= rate[:deliver_days] %> days
+    </div>
+  <% end %>
+</div>
+
+
+
+
+
+<p>
+  <b>From zip code:</b>
+  <%= @shipping_rate.from_zip_code %>
+</p>
+
+<p>
+  <b>To zip code:</b>
+  <%= @shipping_rate.to_zip_code %>
+</p>
+
+<p>
+  <b>Weight:</b>
+  <%= @shipping_rate.weight %>
+</p>
+
+<p>
+  <b>Ship date:</b>
+  <%= @shipping_rate.ship_date %>
+</p>
+
+<p>
+  <b>Service type:</b>
+  <%= @shipping_rate.service_type %>
+</p>
+
+<p>
+  <b>Package type:</b>
+  <%= @shipping_rate.package_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_shipping_rate_path(@shipping_rate) %> |
+<%= link_to 'Back', shipping_rates_path %>
+
+
