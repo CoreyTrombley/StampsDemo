@@ -3,7 +3,7 @@ class ShippingLabel < ActiveRecord::Base
   belongs_to :to_address, :class_name => 'Address', :foreign_key => :to_address_id
   belongs_to :shipping_rate #TODO - Make a model called ShippingRate
 
-  attr_accessible :from, :item, :to, :weight, :label_url
+  attr_accessible :from, :item, :to, :weight, :label_url, :from_address, :to_address
 
   accepts_nested_attributes_for :from_address, :to_address
 

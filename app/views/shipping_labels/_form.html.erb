@@ -10,36 +10,71 @@
       </ul>
     </div>
   <% end %>
-
+  <h3>Package Deatails</h3>
   <div class="field">
-    <%= f.label :item %><br />
+    <%= f.label :item, "Type" %><br />
     <%= f.text_field :item %>
   </div>
   <div class="field">
     <%= f.label :weight %><br />
     <%= f.text_field :weight %>
   </div>
-  <div class="field">
+<!--   <div class="field">
     <%= f.label :from %><br />
     <%= f.text_field :from %>
   </div>
   <div class="field">
     <%= f.label :to %><br />
     <%= f.text_field :to %>
-  </div>
+  </div> -->
 
   <h3>From Address</h3>
   <%= f.fields_for :from_address do |a| %>
-    <%= a.label :full_name %><br />
-    <%= a.text_field :full_name %>
-
+    <div>
+      <%= a.label :full_name %><br />
+      <%= a.text_field :full_name %>
+    </div>
+    <div>
+      <%= a.label :address1 %><br />
+      <%= a.text_field :address1 %>
+    </div>
+    <div>
+      <%= a.label :city %><br />
+      <%= a.text_field :city %>
+    </div>
+    <div>
+      <%= a.label :state %><br />
+      <%= a.text_field :state %>
+    </div>
+    <div>
+      <%= a.label :zip_code %><br />
+      <%= a.text_field :zip_code %>
+    </div>
     <!-- TODO Fill in with other attributes -->
   <% end %>
 
   <h3>To Address</h3>
   <%= f.fields_for :to_address do |a| %>
-    <%= a.label :full_name %><br />
-    <%= a.text_field :full_name %>
+    <div>
+      <%= a.label :full_name %><br />
+      <%= a.text_field :full_name %>
+    </div>
+    <div>
+      <%= a.label :address1 %><br />
+      <%= a.text_field :address1 %>
+    </div>
+    <div>
+      <%= a.label :city %><br />
+      <%= a.text_field :city %>
+    </div>
+    <div>
+      <%= a.label :state %><br />
+      <%= a.text_field :state %>
+    </div>
+    <div>
+      <%= a.label :zip_code %><br />
+      <%= a.text_field :zip_code %>
+    </div>
   <% end %>
 
   <div class="actions">
