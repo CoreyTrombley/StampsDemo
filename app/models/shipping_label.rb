@@ -12,17 +12,24 @@ class ShippingLabel < ActiveRecord::Base
   validate :shipping_rate, :presence => true
 
   def make_label
-    rates = Stamps.get_rates(
-      :from_zip_code => self.from_address.zip_code,
-      :to_zip_code   => self.to_address.zip_code,
-      :weight_lb     => self.weight,
-      :ship_date     => self.ship_date,
-      :service_type  => self.service_type,
-      :package_type  => self.item
-    )
+    ####################################################
+    # Currently is not needed as the information they  #
+    # provide gets the rate needed. If we want to show #
+    # rates this can me used, but will add a step for  #
+    # the user.                                        #
+    ####################################################
+    # rates = Stamps.get_rates(
+    #   :from_zip_code => self.from_address.zip_code,
+    #   :to_zip_code   => self.to_address.zip_code,
+    #   :weight_lb     => self.weight,
+    #   :ship_date     => self.ship_date,
+    #   :service_type  => self.service_type,
+    #   :package_type  => self.item
+    # )
+    ####################################################
 
     stamp = Stamps.create!({
-    :transaction_id  => "RANDOM_STRING",
+    :transaction_id  => Time.now.strftime("%m%d%Y%I%M%S"),
     :tracking_number => true,
     :to => {
       :full_name   => self.to_address.full_name,
