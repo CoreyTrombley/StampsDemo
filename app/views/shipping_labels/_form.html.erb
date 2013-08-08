@@ -21,7 +21,7 @@
   </div>
     <div class="field">
     <%= label_tag 'Ship Date' %><br />
-    <%= select_date Date.today, :start_year => Date.today.year %>
+    <%= date_select :shipping_label, :ship_date, :start_year => Date.today.year %>
   </div>
 <!--   <div class="field">
     <%= f.label :from %><br />
