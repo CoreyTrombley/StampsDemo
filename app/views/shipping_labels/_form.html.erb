@@ -16,8 +16,8 @@
     <%= f.select :item, Stamps::Types::PACKAGE %>
   </div>
   <div class="field">
-    <%= f.label :service_type, "Type" %><br />
-    <%= f.select :service_type, Stamps::Types::SERVICE %>
+    <%= f.label :service_type %><br />
+    <%= f.select :service_type, Stamps::Types::SERVICE.map { |s| [ s[1], s[0] ] } %>
   </div>
   <div class="field">
     <%= f.label :weight %><br />

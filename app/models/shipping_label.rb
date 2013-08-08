@@ -17,6 +17,7 @@ class ShippingLabel < ActiveRecord::Base
       :to_zip_code   => self.to_address.zip_code,
       :weight_lb     => self.weight,
       :ship_date     => self.ship_date,
+      :service_type  => self.service_type,
       :package_type  => self.item
     )
 
@@ -33,7 +34,6 @@ class ShippingLabel < ActiveRecord::Base
     :from => {
       :full_name   => self.from_address.full_name,
       :address1    => self.from_address.address1,
-      :address2    => self.from_address.address2,
       :city        => self.from_address.city,
       :state       => self.from_address.state,
       :zip_code    => self.from_address.zip_code
@@ -44,7 +44,7 @@ class ShippingLabel < ActiveRecord::Base
       :weight_oz     => self.weight,
       :ship_date     => self.ship_date,
       :package_type  => self.item,
-      :service_type  => 'US-FC',
+      :service_type  => self.service_type,
       :cod_value     => 10.00,
       :add_ons       => {
         :add_on => [
