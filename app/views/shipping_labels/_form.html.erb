@@ -19,6 +19,10 @@
     <%= f.label :weight %><br />
     <%= f.text_field :weight %>
   </div>
+    <div class="field">
+    <%= label_tag 'Ship Date' %><br />
+    <%= select_date Date.today, :start_year => Date.today.year %>
+  </div>
 <!--   <div class="field">
     <%= f.label :from %><br />
     <%= f.text_field :from %>
