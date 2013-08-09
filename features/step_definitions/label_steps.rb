@@ -4,10 +4,12 @@ Given /^I am on the shipping label printing page$/ do
 end
 
 Given /^I request a label for a "(.*?)" weighing "(.*?)" from "(.*?)" to "(.*?)"$/ do |product, weight, from, to|
-  fill_in :item, :with => product
+  within 'select#shipping_label_item' do
+    select "Package"
+  end
+  select 'USPS Parcel Post'
   fill_in :Weight, :with => weight
-  fill_in :from, :with => from
-  fill_in :to, :with => to
+  fill_in :shipping_label_from_address_attributes_full_name, :with => 'Corey Trombley'
 end
 
 When /^I press "(.*?)"$/ do |value|
