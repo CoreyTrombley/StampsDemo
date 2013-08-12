@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808195409) do
+ActiveRecord::Schema.define(:version => 20130807145454) do
 
   create_table "addresses", :force => true do |t|
     t.string   "full_name"
@@ -28,23 +28,8 @@ ActiveRecord::Schema.define(:version => 20130808195409) do
     t.string   "weight"
     t.string   "from"
     t.string   "to"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.string   "label_url"
-    t.date     "ship_date"
-    t.string   "service_type"
-  end
-
-  create_table "shipping_rates", :force => true do |t|
-    t.string   "from_zip_code"
-    t.string   "to_zip_code"
-    t.float    "weight"
-    t.date     "ship_date"
-    t.string   "service_type"
-    t.string   "package_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.text     "rates"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
