@@ -1,3 +1,5 @@
+# currently not intagrated with teh making of a label, but this will get rates for a shippment with valid data.
+# TODO: Parse return data to display rates.
 class ShippingRate < ActiveRecord::Base
   attr_accessible :from_zip_code, :package_type, :service_type, :ship_date, :to_zip_code, :weight, :rates
 

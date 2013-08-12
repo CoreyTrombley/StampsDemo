@@ -4,17 +4,19 @@ Given /^I am on the shipping label printing page$/ do
 end
 
 Given /^I request a label for a "(.*?)" weighing "(.*?)" from "(.*?)" to "(.*?)"$/ do |product, weight, from, to|
+  # Package info being entered
   select "Package"
   select 'USPS Parcel Post'
   fill_in "shipping_label[weight]", :with => weight
 
-  # From info being
+  # From address info being entered
   fill_in "shipping_label[from_address_attributes][full_name]", :with => 'Corey Trombley'
   fill_in "shipping_label[from_address_attributes][address1]", :with => '1234 ABD Drive'
   fill_in "shipping_label[from_address_attributes][city]", :with => 'Queens'
   fill_in "shipping_label[from_address_attributes][state]", :with => 'NY'
   fill_in "shipping_label[from_address_attributes][zip_code]", :with => '11370'
 
+  # To address info being entered
   fill_in "shipping_label[to_address_attributes][full_name]", :with => 'Elaine Trombley'
   fill_in "shipping_label[to_address_attributes][address1]", :with => '4321 ZYX Place'
   fill_in "shipping_label[to_address_attributes][city]", :with => 'Wantagh'

@@ -13,10 +13,14 @@
   <h3>Package Deatails</h3>
   <div class="field">
     <%= f.label :item, "Type" %><br />
+    <!-- Displays the different types of packages that can be sent -->
+    <!-- TODO: Match the package with the correct service types and display only the correct ones with each type of package -->
     <%= f.select :item, Stamps::Types::PACKAGE %>
   </div>
   <div class="field">
     <%= f.label :service_type %><br />
+    <!-- Displays the service types that can be used for any given package -->
+    <!-- Displays the full name of the service with the value equaling the shorthand -->
     <%= f.select :service_type, Stamps::Types::SERVICE.map { |s| [ s[1], s[0] ] } %>
   </div>
   <div class="field">

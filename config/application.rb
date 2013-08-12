@@ -65,6 +65,8 @@ module StampsDemo
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+
+    # This is the Stamps.com User Account info, Needed to make calls to the stamps api.
     # Authenticate you stamps.com credentials
     Stamps.configure do |config|
       config.integration_id = 'b6c55973-460a-4892-ae91-97e125f7a2bf'

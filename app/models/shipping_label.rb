@@ -28,6 +28,8 @@ class ShippingLabel < ActiveRecord::Base
     # )
     ####################################################
 
+
+    # Makes a call to the Stamps API with valid data to create a label
     stamp = Stamps.create!({
     :transaction_id  => Time.now.strftime("%m%d%Y%I%M%S"),
     :tracking_number => true,
@@ -62,7 +64,8 @@ class ShippingLabel < ActiveRecord::Base
     }
   }
 )
-
+    # Saves the label url in teh data base. 
+    # TODO: look up how long label urls last.
     self.label_url = stamp[:url]
   end
 end
