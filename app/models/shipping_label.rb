@@ -57,6 +57,7 @@ class ShippingLabel < ActiveRecord::Base
       :ship_date     => self.ship_date,
       :package_type  => self.item,
       :service_type  => self.service_type
+      # TODO: Add shipping add_ons to the form and link to label creation method
       #:cod_value     => 10.00,
       # :add_ons       => {
       #   :add_on => [
