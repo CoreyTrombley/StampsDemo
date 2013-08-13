@@ -66,9 +66,14 @@ class ShippingLabel < ActiveRecord::Base
 )
     # Saves the label url in teh data base.
     # TODO: look up how long label urls last.
-    stamp[:errors].each do |msg|
-      self.errors.add(:service_type, msg)
+    if stamp[:errors] != nil
+      stamp[:errors].each do |msg|
+        self.errors.add(:service_type, msg)
+      end
+      binding.pry
     end
-    self.label_url = stamp[:url]
+    if stamp[:url] != nil 
+      self.label_url = stamp[:url]
+    end
   end
 end
