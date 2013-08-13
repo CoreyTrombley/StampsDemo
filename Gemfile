@@ -6,7 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'stamps'
+gem 'stamps', :git => 'git@github.com:shopseen/stamps.git'
 gem 'json'
 gem 'launchy'
 
