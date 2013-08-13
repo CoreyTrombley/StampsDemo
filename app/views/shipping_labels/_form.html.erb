@@ -24,6 +24,13 @@
     <%= f.select :service_type, Stamps::Types::SERVICE.map { |s| [ s[1], s[0] ] } %>
   </div>
   <div class="field">
+    <% Stamps::Types::ADD_ONS.each do |add_on_code, add_on_name| %>
+      <%= check_box_tag add_on_code %>
+      <%= label_tag add_on_code, add_on_name %>
+      <br>
+    <% end %>
+  </div>
+  <div class="field">
     <%= f.label :weight %><br />
     <%= f.text_field :weight %>
   </div>
