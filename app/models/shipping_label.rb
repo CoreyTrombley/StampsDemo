@@ -11,6 +11,9 @@ class ShippingLabel < ActiveRecord::Base
 
   validate :shipping_rate, :presence => true
 
+
+  # TODO: Create a way to purchase postage
+
   def make_label
     ####################################################
     # Currently is not needed as the information they  #
@@ -66,14 +69,14 @@ class ShippingLabel < ActiveRecord::Base
 )
     # Saves the label url in teh data base.
     # TODO: look up how long label urls last.
-    if stamp[:errors] != nil
+    if stamp[:errors]
       stamp[:errors].each do |msg|
         self.errors.add(:service_type, msg)
       end
-      binding.pry
-    end
-    if stamp[:url] != nil 
+    else
       self.label_url = stamp[:url]
     end
+
+    return self.errors.empty?
   end
 end

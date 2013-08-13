@@ -3,7 +3,6 @@
 class ShippingRate < ActiveRecord::Base
   attr_accessible :from_zip_code, :package_type, :service_type, :ship_date, :to_zip_code, :weight, :rates
 
-  has_many :shipping_labels
   before_create :get_rates
 
   def get_rates
