@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808195409) do
+ActiveRecord::Schema.define(:version => 20130813125330) do
 
   create_table "addresses", :force => true do |t|
     t.string   "full_name"
@@ -28,11 +28,13 @@ ActiveRecord::Schema.define(:version => 20130808195409) do
     t.string   "weight"
     t.string   "from"
     t.string   "to"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "label_url"
     t.date     "ship_date"
     t.string   "service_type"
+    t.integer  "from_address_id"
+    t.integer  "to_address_id"
   end
 
   create_table "shipping_rates", :force => true do |t|
