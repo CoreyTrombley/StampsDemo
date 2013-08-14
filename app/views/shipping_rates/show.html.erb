@@ -7,16 +7,45 @@
 <div>
   <% @shipping_rate.get_rates.each do |rate| %>
     <div>
-      Amount: <%= rate[:amount] %> dolars
+      <p>
+        Cost: <%= rate[:amount] %>
+      </p>
+      <p>
+        Service Type Code: <%= rate[:service_type] %>
+      </p>
+      <p>
+        Package Type: <%= rate[:package_type] %>
+      </p>
+      <p>
+        Delivery Time: <%= rate[:deliver_days] %>
+      </p>
+      <p>
+        <ul>
+        <% rate[:add_ons][:add_on_v2].each do |add_on| %>
+          <li>
+            Add on Type: <%= add_on[:add_on_type] %>
+            <% if add_on[:requires_all_of] %>
+              <ul>
+                <% if add_on[:requires_all_of][:requires_one_of][:add_on_type_v2].length < 1 %>
+                <% add_on[:requires_all_of][:requires_one_of][:add_on_type_v2].each do |type| %>
+                  <li>Required add ons: <%= type %></li>
+                <% end %>
+                <% else %>
+                  Required add ons: <%= add_on[:requires_all_of][:requires_one_of][:add_on_type_v2] %>
+                <% end %>
+              </ul>
+            <% end %>
+          </li>
+        <% end %>
+        </ul>
+      </p>
+      <p>
+        <%=  %>
+      </p>
       <br>
-      Travel time: <%= rate[:deliver_days] %> days
     </div>
   <% end %>
 </div>
-
-
-
-
 
 <p>
   <b>From zip code:</b>

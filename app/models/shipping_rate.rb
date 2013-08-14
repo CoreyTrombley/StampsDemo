@@ -11,8 +11,8 @@ class ShippingRate < ActiveRecord::Base
       :to_zip_code   => self.to_zip_code,
       :weight_lb     => self.weight,
       :ship_date     => self.ship_date,
-      :service_type  => self.service_type,
-      :package_type  => self.package_type
+      # :service_type  => self.service_type,
+      # :package_type  => self.package_type
     )
 
     self.rates = rates
