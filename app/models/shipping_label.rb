@@ -36,21 +36,21 @@ class ShippingLabel < ActiveRecord::Base
     stamp = Stamps.create!({
     :transaction_id  => Time.now.strftime("%m%d%Y%I%M%S"),
     :tracking_number => true,
-    :to => {
-      :full_name   => self.to_address.full_name,
-      :address1    => self.to_address.address1,
-      :city        => self.to_address.city,
-      :state       => self.to_address.state,
-      :zip_code    => self.to_address.zip_code
+    :to               => {
+      :full_name          => self.to_address.full_name,
+      :address1           => self.to_address.address1,
+      :city               => self.to_address.city,
+      :state              => self.to_address.state,
+      :zip_code           => self.to_address.zip_code
     },
-    :from => {
-      :full_name   => self.from_address.full_name,
-      :address1    => self.from_address.address1,
-      :city        => self.from_address.city,
-      :state       => self.from_address.state,
-      :zip_code    => self.from_address.zip_code
+    :from             => {
+      :full_name          => self.from_address.full_name,
+      :address1           => self.from_address.address1,
+      :city               => self.from_address.city,
+      :state              => self.from_address.state,
+      :zip_code           => self.from_address.zip_code
     },
-    :rate          => {
+    :rate             => {
       :from_zip_code      => self.from_address.zip_code,
       :to_zip_code        => self.to_address.zip_code,
       :weight_oz          => self.weight,
