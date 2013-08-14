@@ -3,7 +3,7 @@ class ShippingLabel < ActiveRecord::Base
   belongs_to :to_address, :class_name => 'Address', :foreign_key => :to_address_id
   belongs_to :shipping_rate #TODO - Make a model called ShippingRate
 
-  attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type
+  attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type, :insurance_ammount, :collect_on_delivery
 
   accepts_nested_attributes_for :from_address, :to_address
 
@@ -51,14 +51,18 @@ class ShippingLabel < ActiveRecord::Base
       :zip_code    => self.from_address.zip_code
     },
     :rate          => {
-      :from_zip_code => self.from_address.zip_code,
-      :to_zip_code   => self.to_address.zip_code,
-      :weight_oz     => self.weight,
-      :ship_date     => self.ship_date,
-      :package_type  => self.item,
-      :service_type  => self.service_type
+      :from_zip_code      => self.from_address.zip_code,
+      :to_zip_code        => self.to_address.zip_code,
+      :weight_oz          => self.weight,
+      :ship_date          => self.ship_date,
+      :package_type       => self.item,
+      :service_type       => self.service_type,
+
+      # ALERT: These may need to be integers
+      :insurance_ammount  => self.insurance_ammount,
+      :cod_value          => self.collect_on_delivery
+      
       # TODO: Add shipping add_ons to the form and link to label creation method
-      #:cod_value     => 10.00,
       # :add_ons       => {
       #   :add_on => [
       #     { :type => 'US-A-COD' },
