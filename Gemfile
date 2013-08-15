@@ -28,6 +28,7 @@ group :test, :development do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'rspec-rails'
 end
 
 gem 'jquery-rails'

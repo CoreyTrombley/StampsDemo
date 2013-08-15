@@ -1,9 +1,17 @@
 class ShippingLabel < ActiveRecord::Base
   belongs_to :from_address, :class_name => 'Address', :foreign_key => :from_address_id
   belongs_to :to_address, :class_name => 'Address', :foreign_key => :to_address_id
-  belongs_to :shipping_rate
+  belongs_to :shipping_rate #TODO - Make a model called ShippingRate
 
-  attr_accessor :add_on_codes
+  attr_writer :add_on_codes
+
+  def add_on_codes
+    default_add_ons.merge @add_on_codes
+  end
+
+  def default_add_ons
+    @default_add_ons ||= { :type => 'SC-A-HP' }
+  end
 
   attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type, :insurance_ammount, :collect_on_delivery, :add_on_codes
 
@@ -20,7 +28,7 @@ class ShippingLabel < ActiveRecord::Base
     ####################################################
     # Currently is not needed as the information they  #
     # provide gets the rate needed. If we want to show #
-    # rates this can be used, but will add a step for  #
+    # rates this can me used, but will add a step for  #
     # the user.                                        #
     ####################################################
     # rates = Stamps.get_rates(
@@ -68,6 +76,7 @@ class ShippingLabel < ActiveRecord::Base
         }
       }
     }
+
     stamp = Stamps.create!(opts)
 
     # Saves the label url in the data base.
