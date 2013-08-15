@@ -72,8 +72,8 @@ module StampsDemo
       config.integration_id = 'b6c55973-460a-4892-ae91-97e125f7a2bf'
       config.username       = 'tormbley'
       config.password       = 'postage1'
-      config.endpoint       = "https://swsim.testing.stamps.com/swsim/SwsimV24.asmx"
-      config.namespace      = "http://stamps.com/xml/namespace/2012/05/swsim/swsimv24"
+      config.endpoint       = "http://swsim.testing.stamps.com/swsim/swsimv29.asmx"
+      config.namespace      = "http://stamps.com/xml/namespace/2013/05/swsim/swsimv29"
     end
   end
 end

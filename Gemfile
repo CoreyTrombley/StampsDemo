@@ -6,7 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'stamps', :git => 'git@github.com:shopseen/stamps.git'
+gem 'stamps', :path => '~/Desktop/development/stamps'
 gem 'json'
 gem 'launchy'
 
@@ -32,3 +32,4 @@ end
 
 gem 'jquery-rails'
 gem 'pry'
+gem 'pry-debugger'

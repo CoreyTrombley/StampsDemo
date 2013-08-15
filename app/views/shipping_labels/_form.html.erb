@@ -25,8 +25,8 @@
   </div>
   <div class="field">
     <% Stamps::Types::ADD_ONS.each do |add_on_code, add_on_name| %>
-      <%= check_box_tag add_on_code %>
-      <%= label_tag add_on_code, add_on_name %>
+      <%= f.check_box :add_on_codes, { :id => "shipping_label_#{add_on_code}", :name => :"shipping_label[add_on_codes][]" }, add_on_code, nil %>
+      <%= f.label add_on_code, add_on_name %>
       <br>
     <% end %>
   </div>
