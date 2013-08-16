@@ -61,7 +61,7 @@ Given(/^I request a label for something weighing "(.*?)" from "(.*?)" to "(.*?)"
 end
 
 Then(/^I should see only those addons relevant to this service type$/) do
-  pending # express the regexp above with the code you wish you had
+  page.has_content?('#add-ons')
 end
 
 Given(/^I choose the "(.*?)" addon$/) do |add_on_codes|
