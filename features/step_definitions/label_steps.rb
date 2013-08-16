@@ -39,3 +39,34 @@ Then /^I should see a shipping label$/ do
   # Checks that the a label is shown. The alt tag is added from the label being generated.
   page.has_content?('alt="Label-200"')
 end
+
+
+
+Given(/^I choose "(.*?)" as my service type$/) do |arg1|
+  select 'USPS Parcel Post'
+end
+
+Then(/^I should not see a shipping label$/) do
+  page.has_content?('Please Select a package type')
+end
+
+Then(/^I should see "(.*?)"$/) do |arg1|
+  page.has_content?('Please Select a package type')
+end
+
+Given(/^I request a label for something weighing "(.*?)" from "(.*?)" to "(.*?)"$/) do |weight, from_zip_code, to_zip_code|
+  fill_in "shipping_label[weight]", :with => weight
+  fill_in "shipping_label[from_address_attributes][zip_code]", :with => from_zip_code
+  fill_in "shipping_label[to_address_attributes][zip_code]", :with => to_zip_code
+end
+
+Then(/^I should see only those addons relevant to this service type$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^I choose the "(.*?)" addon$/) do |add_on_codes|
+  check 'SC-A-HP'
+  check 'US-A-RRM'
+  check 'US-A-INS'
+  check 'US-A-CM'
+end

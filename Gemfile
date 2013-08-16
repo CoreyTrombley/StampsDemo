@@ -24,7 +24,7 @@ end
 group :test, :development do
   gem 'cucumber-rails', :require => false
   # database_cleaner is not required, but highly recommended
-  gem 'database_cleaner'
+  gem 'database_cleaner', '0.9.1'
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'

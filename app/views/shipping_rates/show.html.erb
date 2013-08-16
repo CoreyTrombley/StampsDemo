@@ -21,17 +21,17 @@
       </p>
       <p>
         <ul>
-        <% rate[:add_ons][:add_on_v4].each do |add_on| %>
+        <% rate[:add_ons][:add_on_v2].each do |add_on| %>
           <li>
             Add on Type: <%= add_on[:add_on_type] %>
             <% if add_on[:requires_all_of] %>
               <ul>
-                <% if add_on[:requires_all_of][:requires_one_of][:add_on_type_v4].length < 1 %>
-                <% add_on[:requires_all_of][:requires_one_of][:add_on_type_v4].each do |type| %>
+                <% if add_on[:requires_all_of][:requires_one_of][:add_on_type_v2].length < 1 %>
+                <% add_on[:requires_all_of][:requires_one_of][:add_on_type_v2].each do |type| %>
                   <li>Required add ons: <%= type %></li>
                 <% end %>
                 <% else %>
-                  Required add ons: <%= add_on[:requires_all_of][:requires_one_of][:add_on_type_v4] %>
+                  Required add ons: <%= add_on[:requires_all_of][:requires_one_of][:add_on_type_v2] %>
                 <% end %>
               </ul>
             <% end %>
