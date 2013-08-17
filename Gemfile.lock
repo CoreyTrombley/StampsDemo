@@ -1,9 +1,8 @@
-GIT
-  remote: git@github.com:shopseen/stamps.git
-  revision: d907aeb6db01532869ea1465691bc4652f550048
+PATH
+  remote: ~/Desktop/development/stamps
   specs:
     stamps (0.3.0)
-      hashie (~> 1.2.0)
+      hashie (~> 1.0.0)
       httpi (= 0.7.9)
       json (~> 1.0)
       multi_json (~> 1.0)
@@ -54,6 +53,7 @@ GEM
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
     coderay (1.0.9)
+    columnize (0.3.6)
     crack (0.1.8)
     cucumber (1.3.6)
       builder (>= 2.1.2)
@@ -66,8 +66,14 @@ GEM
       cucumber (>= 1.2.0)
       nokogiri (>= 1.5.0)
       rails (~> 3.0)
-    database_cleaner (1.1.1)
+    database_cleaner (0.9.1)
     debug_inspector (0.0.2)
+    debugger (1.6.1)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.3)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.2.3)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     execjs (1.4.0)
@@ -76,7 +82,7 @@ GEM
       multi_json (~> 1.3)
     gyoku (1.1.0)
       builder (>= 2.1.2)
-    hashie (1.2.0)
+    hashie (1.0.0)
     hike (1.2.3)
     httpi (0.7.9)
       rack
@@ -103,6 +109,9 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-debugger (0.2.2)
+      debugger (~> 1.3)
+      pry (~> 0.9.10)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
     rack (1.4.5)
@@ -130,6 +139,17 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rspec-core (2.14.5)
+    rspec-expectations (2.14.2)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.14.3)
+    rspec-rails (2.14.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
     sass (3.2.10)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -166,13 +186,15 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   cucumber-rails
-  database_cleaner
+  database_cleaner (= 0.9.1)
   jquery-rails
   json
   launchy
   pry
+  pry-debugger
   pry-rails
   rails (= 3.2.13)
+  rspec-rails
   sass-rails (~> 3.2.3)
   sqlite3
   stamps!
