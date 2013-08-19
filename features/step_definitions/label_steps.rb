@@ -6,7 +6,7 @@ end
 Given /^I request a label for a "(.*?)" weighing "(.*?)" from "(.*?)" to "(.*?)"$/ do |product, weight, from, to|
   # Package info being entered
   select "Package"
-  select 'USPS Parcel Post'
+  select 'USPS Parcel Select'
   fill_in "shipping_label[weight]", :with => weight
 
   # From address info being entered
@@ -32,26 +32,25 @@ Then /^I should see a shipping label$/ do
   # TODO - tricky one to test.... will have a URL in the page, perhaps output it
   # somewhere on the view for now, and have a regexp to see that there is an image
   # in a box or somthing...
-
   # Testing to check for img tag. Make sure I am on the correct page
-  page.has_content?('img')
 
-  # Checks that the a label is shown. The alt tag is added from the label being generated.
-  page.has_content?('alt="Label-200"')
+  # assert page.has_content?('<img>'), "Expected an img tag, but didn't one..."
+  assert page.should have_xpath("//img[@alt='Label-200']")
 end
 
 
 
-Given(/^I choose "(.*?)" as my service type$/) do |arg1|
-  select 'USPS Parcel Post'
+Given(/^I choose "(.*?)" as my service type$/) do |service|
+  select service
 end
 
 Then(/^I should not see a shipping label$/) do
-  page.has_content?('Please Select a package type')
+  assert page.has_content?('Please Select a package type')
 end
 
 Then(/^I should see "(.*?)"$/) do |arg1|
-  page.has_content?('Please Select a package type')
+
+  assert page.has_content?('Please Select a package type')
 end
 
 Given(/^I request a label for something weighing "(.*?)" from "(.*?)" to "(.*?)"$/) do |weight, from_zip_code, to_zip_code|
@@ -61,12 +60,9 @@ Given(/^I request a label for something weighing "(.*?)" from "(.*?)" to "(.*?)"
 end
 
 Then(/^I should see only those addons relevant to this service type$/) do
-  page.has_content?('#add-ons')
+  assert page.has_content?('#add-ons')
 end
 
 Given(/^I choose the "(.*?)" addon$/) do |add_on_codes|
-  check 'SC-A-HP'
-  check 'US-A-RRM'
-  check 'US-A-INS'
-  check 'US-A-CM'
+  check "shipping_label_#{add_on_codes}"
 end

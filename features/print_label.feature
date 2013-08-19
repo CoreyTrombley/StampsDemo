@@ -4,28 +4,15 @@ Feature: Print Shipping Label
     Given I am on the shipping label printing page
       And I choose "USPS Parcel Post" as my service type
       And I request a label for a "Package" weighing "5" from "95673" to "11370"
+      And I choose the "US-A-SC" addon
     When I press "Print Label"
     Then I should see a shipping label
-
-  Scenario: A customer prints a shipping label without specifying service type
-    Given I am on the shipping label printing page
-      And I request a label for a "Package" weighing "5" from "London, OH" to "Birmingham, AL"
-    When I press "Print Label"
-    Then I should not see a shipping label
-      And I should see "Please specify a service type"
-
-  Scenario: A customer prints a shipping label without specifying package type
-    Given I am on the shipping label printing page
-      And I choose "USPS Parcel Post" as my service type
-      And I request a label for something weighing "5" from "London, OH" to "Birmingham, AL"
-    When I press "Print Label"
-    Then I should not see a shipping label
-      And I should see "Please specify a package type"
-
+   @javascript @wip
    Scenario: A customer prints a shipping label without choosing a mandatory add-on
     Given I am on the shipping label printing page
       And I choose "USPS Parcel Post" as my service type
       And I request a label for a "Package" weighing "5" from "London, OH" to "Birmingham, AL"
+      And I choose the "US-A-SC" addon
     Then I should see only those addons relevant to this service type
     When I press "Print Label"
     Then I should not see a shipping label
@@ -35,6 +22,7 @@ Feature: Print Shipping Label
       Given I am on the shipping label printing page
         And I choose "USPS Parcel Post" as my service type
         And I choose the "US-A-RRM" addon
+        And I choose the "US-A-SC" addon
         And I request a label for a "Package" weighing "5" from "London, OH" to "Birmingham, AL"
       When I press "Print Label"
       Then I should see a shipping label

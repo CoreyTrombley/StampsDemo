@@ -11,11 +11,7 @@ class ShippingLabel < ActiveRecord::Base
   attr_writer :add_on_codes
 
   def add_on_codes
-    @add_on_codes
-  end
-
-  def default_add_ons
-    @default_add_ons ||= { :type => 'SC-A-HP' }
+    @add_on_codes || []
   end
 
   attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type, :insurance_ammount, :collect_on_delivery, :add_on_codes
@@ -25,6 +21,7 @@ class ShippingLabel < ActiveRecord::Base
   before_create :make_label
 
   validate :shipping_rate, :presence => true
+  validate :service_type, :presence => true
 
 
   # TODO: Create a way to purchase postage
@@ -77,11 +74,10 @@ class ShippingLabel < ActiveRecord::Base
         # :insurance_ammount  => self.insurance_ammount,
         # :cod_value          => self.collect_on_delivery
         :add_ons => {
-          :add_on => self.add_on_codes.map {|code| { :type => code } }
+          :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
         }
       }
     }
-
     stamp = Stamps.create!(opts)
 
     # Saves the label url in the data base.
