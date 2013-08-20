@@ -5,8 +5,7 @@ end
 
 Given /^I request a label for a "(.*?)" weighing "(.*?)" from "(.*?)" to "(.*?)"$/ do |product, weight, from, to|
   # Package info being entered
-  select "Package"
-  select 'USPS Parcel Select'
+  select product
   fill_in "shipping_label[weight]", :with => weight
 
   # From address info being entered
@@ -33,7 +32,7 @@ Then /^I should see a shipping label$/ do
   # somewhere on the view for now, and have a regexp to see that there is an image
   # in a box or somthing...
   # Testing to check for img tag. Make sure I am on the correct page
-
+  save_and_open_page
   # assert page.has_content?('<img>'), "Expected an img tag, but didn't one..."
   assert page.should have_xpath("//img[@alt='Label-200']")
 end

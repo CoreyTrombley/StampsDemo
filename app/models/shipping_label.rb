@@ -33,14 +33,14 @@ class ShippingLabel < ActiveRecord::Base
     # rates this can me used, but will add a step for  #
     # the user.                                        #
     ####################################################
-    # rates = Stamps.get_rates(
-    #   :from_zip_code => self.from_address.zip_code,
-    #   :to_zip_code   => self.to_address.zip_code,
-    #   :weight_lb     => self.weight,
-    #   :ship_date     => self.ship_date,
-    #   :service_type  => self.service_type,
-    #   :package_type  => self.item
-    # )
+    rates = Stamps.get_rates(
+      :from_zip_code => self.from_address.zip_code,
+      :to_zip_code   => self.to_address.zip_code,
+      :weight_lb     => self.weight,
+      :ship_date     => self.ship_date,
+      :service_type  => self.service_type,
+      :package_type  => self.item
+    )
     ####################################################
 
 
@@ -62,26 +62,31 @@ class ShippingLabel < ActiveRecord::Base
         :state              => self.from_address.state,
         :zip_code           => self.from_address.zip_code
       },
-      :rate             => {
-        :from_zip_code      => self.from_address.zip_code,
-        :to_zip_code        => self.to_address.zip_code,
-        :weight_oz          => self.weight,
-        :ship_date          => self.ship_date,
-        :package_type       => self.item,
-        :service_type       => self.service_type,
+      :rate => rates.first.merge(:add_ons => {
+        :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
+      })
+      # :rate             => {
+      #   :from_zip_code      => self.from_address.zip_code,
+      #   :to_zip_code        => self.to_address.zip_code,
+      #   :weight_oz          => self.weight,
+      #   :ship_date          => self.ship_date,
+      #   :package_type       => self.item,
+      #   :service_type       => self.service_type,
 
-        # ALERT: These may need to be integers
-        # :insurance_ammount  => self.insurance_ammount,
-        # :cod_value          => self.collect_on_delivery
-        :add_ons => {
-          :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
-        }
-      }
+      #   # ALERT: These may need to be integers
+      #   # :insurance_ammount  => self.insurance_ammount,
+      #   # :cod_value          => self.collect_on_delivery
+      #   :add_ons => {
+      #     :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
+      #   }
+      # }
     }
+
     stamp = Stamps.create!(opts)
 
     # Saves the label url in the data base.
     # TODO: look up how long label urls last.
+
     if stamp[:errors]
       stamp[:errors].each do |msg|
         self.errors.add(:service_type, msg)
