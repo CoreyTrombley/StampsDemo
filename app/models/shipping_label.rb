@@ -62,9 +62,9 @@ class ShippingLabel < ActiveRecord::Base
         :state              => self.from_address.state,
         :zip_code           => self.from_address.zip_code
       },
-      :rate => rates.first.merge(:add_ons => {
-        :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
-      })
+      :rate =>  rates.first.merge(:add_ons => {
+                  :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
+                })
       # :rate             => {
       #   :from_zip_code      => self.from_address.zip_code,
       #   :to_zip_code        => self.to_address.zip_code,

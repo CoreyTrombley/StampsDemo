@@ -11,16 +11,16 @@ Given /^I request a label for a "(.*?)" weighing "(.*?)" from "(.*?)" to "(.*?)"
   # From address info being entered
   fill_in "shipping_label[from_address_attributes][full_name]", :with => 'Corey Trombley'
   fill_in "shipping_label[from_address_attributes][address1]", :with => '1234 ABD Drive'
-  fill_in "shipping_label[from_address_attributes][city]", :with => 'Queens'
-  fill_in "shipping_label[from_address_attributes][state]", :with => 'NY'
-  fill_in "shipping_label[from_address_attributes][zip_code]", :with => '11370'
+  fill_in "shipping_label[from_address_attributes][city]", :with => 'Rio Linda'
+  fill_in "shipping_label[from_address_attributes][state]", :with => 'CA'
+  fill_in "shipping_label[from_address_attributes][zip_code]", :with => from
 
   # To address info being entered
   fill_in "shipping_label[to_address_attributes][full_name]", :with => 'Elaine Trombley'
   fill_in "shipping_label[to_address_attributes][address1]", :with => '4321 ZYX Place'
-  fill_in "shipping_label[to_address_attributes][city]", :with => 'Wantagh'
+  fill_in "shipping_label[to_address_attributes][city]", :with => 'East Elmhurst'
   fill_in "shipping_label[to_address_attributes][state]", :with => 'NY'
-  fill_in "shipping_label[to_address_attributes][zip_code]", :with => '11793'
+  fill_in "shipping_label[to_address_attributes][zip_code]", :with => to
 end
 
 When /^I press "(.*?)"$/ do |value|
@@ -32,7 +32,7 @@ Then /^I should see a shipping label$/ do
   # somewhere on the view for now, and have a regexp to see that there is an image
   # in a box or somthing...
   # Testing to check for img tag. Make sure I am on the correct page
-  save_and_open_page
+  # save_and_open_page
   # assert page.has_content?('<img>'), "Expected an img tag, but didn't one..."
   assert page.should have_xpath("//img[@alt='Label-200']")
 end
@@ -44,12 +44,12 @@ Given(/^I choose "(.*?)" as my service type$/) do |service|
 end
 
 Then(/^I should not see a shipping label$/) do
-  assert page.has_content?('Please Select a package type')
+
 end
 
-Then(/^I should see "(.*?)"$/) do |arg1|
+Then(/^I should see "(.*?)"$/) do |error|
 
-  assert page.has_content?('Please Select a package type')
+  assert page.has_content?(error)
 end
 
 Given(/^I request a label for something weighing "(.*?)" from "(.*?)" to "(.*?)"$/) do |weight, from_zip_code, to_zip_code|
