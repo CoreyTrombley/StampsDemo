@@ -24,15 +24,9 @@ class ShippingLabel < ActiveRecord::Base
   validate :service_type, :presence => true
 
 
-  # TODO: Create a way to purchase postage
 
   def make_label
-    ####################################################
-    # Currently is not needed as the information they  #
-    # provide gets the rate needed. If we want to show #
-    # rates this can me used, but will add a step for  #
-    # the user.                                        #
-    ####################################################
+
     rates = Stamps.get_rates(
       :from_zip_code => self.from_address.zip_code,
       :to_zip_code   => self.to_address.zip_code,
@@ -41,7 +35,7 @@ class ShippingLabel < ActiveRecord::Base
       :service_type  => self.service_type,
       :package_type  => self.item
     )
-    ####################################################
+
 
 
     # Makes a call to the Stamps API with valid data to create a label
@@ -85,7 +79,6 @@ class ShippingLabel < ActiveRecord::Base
     stamp = Stamps.create!(opts)
 
     # Saves the label url in the data base.
-    # TODO: look up how long label urls last.
 
     if stamp[:errors]
       stamp[:errors].each do |msg|
