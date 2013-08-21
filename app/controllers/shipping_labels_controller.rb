@@ -82,4 +82,15 @@ class ShippingLabelsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def add_on_lookup
+    # Create a transient ShippingLabel from the parameters
+    @shipping_label = ShippingLabel.new(params[:shipping_label])
+
+    # Find the rates from the API
+    @shipping_rate = @shipping_label.get_rates
+
+    # Render some JS which contains HTML with all the addon checkboxes
+    render :partial => 'shipping_labels/add_ons'
+  end
 end

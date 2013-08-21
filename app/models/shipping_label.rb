@@ -6,8 +6,6 @@ class ShippingLabel < ActiveRecord::Base
   belongs_to :to_address, :class_name => 'Address', :foreign_key => :to_address_id
   belongs_to :shipping_rate #TODO - Make a model called ShippingRate
 
-  attr_accessor :rate
-
   attr_writer :add_on_codes
 
   def add_on_codes
@@ -23,10 +21,7 @@ class ShippingLabel < ActiveRecord::Base
   validate :shipping_rate, :presence => true
   validate :service_type, :presence => true
 
-
-
-  def make_label
-
+  def get_rates
     rates = Stamps.get_rates(
       :from_zip_code => self.from_address.zip_code,
       :to_zip_code   => self.to_address.zip_code,
@@ -35,9 +30,10 @@ class ShippingLabel < ActiveRecord::Base
       :service_type  => self.service_type,
       :package_type  => self.item
     )
+    rates.first
+  end
 
-
-
+  def make_label
     # Makes a call to the Stamps API with valid data to create a label
     opts = {
       :transaction_id  => Time.now.strftime("%m%d%Y%I%M%S"),
@@ -56,9 +52,9 @@ class ShippingLabel < ActiveRecord::Base
         :state              => self.from_address.state,
         :zip_code           => self.from_address.zip_code
       },
-      :rate =>  rates.first.merge(:add_ons => {
-                  :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
-                })
+      :rate =>  get_rates.merge(:add_ons => {
+        :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
+      })
       # :rate             => {
       #   :from_zip_code      => self.from_address.zip_code,
       #   :to_zip_code        => self.to_address.zip_code,

@@ -1,7 +1,8 @@
 <%= fields_for @shipping_label do |f| %>
-	<% Stamps::Types::ADD_ONS.each do |add_on_code, add_on_name| %>
-	  <%= f.check_box :add_on_codes, { :id => "shipping_label_#{add_on_code}", :name => :"shipping_label[add_on_codes][]" }, add_on_code, nil %>
-	  <%= f.label add_on_code, add_on_name %>
+  <% binding.pry %>
+	<% @shipping_rate[:add_ons][:add_on_v4].each do |add_on_code| %>
+	  <%= f.check_box :add_on_codes, { :id => "shipping_label_#{add_on_code[:add_on_type]}", :name => :"shipping_label[add_on_codes][]" }, add_on_code[:add_on_type], nil %>
+	  <%= f.label add_on_code[:add_on_type], add_on_code[:add_on_type] %>
 	  <br>
 	<% end %>
 <% end %>
