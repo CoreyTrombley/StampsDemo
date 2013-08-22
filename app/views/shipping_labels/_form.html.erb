@@ -87,7 +87,9 @@
   <% end %>
 
   <div id="add_ons">
-
+    <% unless @shipping_label.add_on_codes.blank? %>
+      <%= render :partial => 'shipping_labels/add_ons' %>
+    <% end %>
   </div>
 
   <div class="actions">

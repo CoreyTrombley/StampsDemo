@@ -32,7 +32,7 @@ class ShippingLabel < ActiveRecord::Base
       :service_type  => self.service_type,
       :package_type  => self.item
     )
-    rates.first
+    self.rate = rates.first
   end
 
   def make_label
