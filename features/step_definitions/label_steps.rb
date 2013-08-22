@@ -6,21 +6,22 @@ end
 Given /^I request a label for a "(.*?)" weighing "(.*?)" from "(.*?)" to "(.*?)"$/ do |product, weight, from, to|
   # Package info being entered
   select product
-  fill_in "shipping_label[weight]", :with => weight
-
   # From address info being entered
+  fill_in "shipping_label[from_address_attributes][zip_code]", :with => from
+  fill_in "shipping_label[to_address_attributes][zip_code]", :with => to
+
   fill_in "shipping_label[from_address_attributes][full_name]", :with => 'Corey Trombley'
   fill_in "shipping_label[from_address_attributes][address1]", :with => '1234 ABD Drive'
   fill_in "shipping_label[from_address_attributes][city]", :with => 'Rio Linda'
   fill_in "shipping_label[from_address_attributes][state]", :with => 'CA'
-  fill_in "shipping_label[from_address_attributes][zip_code]", :with => from
+
 
   # To address info being entered
   fill_in "shipping_label[to_address_attributes][full_name]", :with => 'Elaine Trombley'
   fill_in "shipping_label[to_address_attributes][address1]", :with => '4321 ZYX Place'
   fill_in "shipping_label[to_address_attributes][city]", :with => 'East Elmhurst'
+  fill_in "shipping_label[weight]", :with => weight
   fill_in "shipping_label[to_address_attributes][state]", :with => 'NY'
-  fill_in "shipping_label[to_address_attributes][zip_code]", :with => to
 end
 
 When /^I press "(.*?)"$/ do |value|
@@ -48,17 +49,17 @@ Then(/^I should not see a shipping label$/) do
 end
 
 Then(/^I should see "(.*?)"$/) do |error|
-
   assert page.has_content?(error)
 end
 
 Given(/^I request a label for something weighing "(.*?)" from "(.*?)" to "(.*?)"$/) do |weight, from_zip_code, to_zip_code|
-  fill_in "shipping_label[weight]", :with => weight
   fill_in "shipping_label[from_address_attributes][zip_code]", :with => from_zip_code
   fill_in "shipping_label[to_address_attributes][zip_code]", :with => to_zip_code
+  fill_in "shipping_label[weight]", :with => weight
 end
 
 Then(/^I should see only those addons relevant to this service type$/) do
+  save_and_open_page
   assert page.has_content?('#add-ons')
 end
 

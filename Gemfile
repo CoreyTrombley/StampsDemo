@@ -29,7 +29,8 @@ group :test, :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'rspec-rails'
-  gem 'selenium-webdriver'
+  # gem 'selenium-webdriver'
+  gem 'capybara-webkit'
 end
 
 gem 'jquery-rails'
