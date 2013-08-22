@@ -1,6 +1,6 @@
 <%= fields_for @shipping_label do |f| %>
-	<% @shipping_label.rate[:add_ons][:add_on_v4].each do |add_on_code| %>
-	  <div id ="<%= add_on_code[:add_on_type] %>"> 
+	<% add_on_codes.each do |add_on_code| %>
+	  <div id ="<%= add_on_code[:add_on_type] %>">
 		  <%= f.check_box :add_on_codes, { :id => "shipping_label_#{add_on_code[:add_on_type]}", :name => :"shipping_label[add_on_codes][]" }, add_on_code[:add_on_type], nil %>
 	    <%= f.label add_on_code[:add_on_type], Stamps::Types::ADD_ONS[add_on_code[:add_on_type]] %>
     </div>
@@ -16,5 +16,18 @@
         <%= f.text_field :collect_on_delivery %>
       </div>
     <% end %>
+
+    <%= f.hidden_field :"shipping_label[available_add_ons][]", add_on_code %>
 	<% end %>
+
+  <!-- TODO persist this info by sending it in the main form as hidden fields -->
+  <%= @required_add_ons.each do |blah| %>
+    <%= f.hidden_field :prohibited_add_ons, [] %>
+
+  <% end %>
+
+  <%= f.hidden_field :required_add_ons, ['hello', 'there'] %>
+
+
+
 <% end %>

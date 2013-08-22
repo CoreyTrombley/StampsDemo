@@ -87,8 +87,8 @@
   <% end %>
 
   <div id="add_ons">
-    <% unless @shipping_label.add_on_codes.blank? %>
-      <%= render :partial => 'shipping_labels/add_ons' %>
+    <% unless @shipping_label.available_add_ons.blank? %>
+      <%= render :partial => 'shipping_labels/add_ons', :locals => { :add_on_codes => @shipping_label.available_add_ons } %>
     <% end %>
   </div>
 

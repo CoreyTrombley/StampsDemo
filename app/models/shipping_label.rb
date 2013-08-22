@@ -8,6 +8,11 @@ class ShippingLabel < ActiveRecord::Base
 
 
   attr_accessor :rate
+  # Need to persist that in the case of failed validation....
+  attr_accessor :available_add_ons
+  attr_accessor :required_add_ons
+  attr_accessor :prohibited_add_ons
+
   attr_writer :add_on_codes
 
   def add_on_codes
@@ -36,6 +41,7 @@ class ShippingLabel < ActiveRecord::Base
   end
 
   def make_label
+
     # Makes a call to the Stamps API with valid data to create a label
     stamp = Stamps.create!(label_options)
 
@@ -56,21 +62,28 @@ class ShippingLabel < ActiveRecord::Base
     {
       :transaction_id  => Time.now.strftime("%m%d%Y%I%M%S"),
       :tracking_number => true,
-      :to               => {
+      :to => {
         :full_name          => self.to_address.full_name,
         :address1           => self.to_address.address1,
         :city               => self.to_address.city,
         :state              => self.to_address.state,
         :zip_code           => self.to_address.zip_code
       },
-      :from             => {
+      :from => {
         :full_name          => self.from_address.full_name,
         :address1           => self.from_address.address1,
         :city               => self.from_address.city,
         :state              => self.from_address.state,
         :zip_code           => self.from_address.zip_code
       },
-      :rate =>  self.rate.merge(rate_options)
+      :rate => {
+        :from_zip_code => self.from_address.zip_code,
+        :to_zip_code   => self.to_address.zip_code,
+        :weight_lb     => self.weight,
+        :ship_date     => self.ship_date,
+        :service_type  => self.service_type,
+        :package_type  => self.item
+      }.merge(rate_options)
     }
   end
 
@@ -82,10 +95,9 @@ class ShippingLabel < ActiveRecord::Base
     }
 
     # Change this to be something else...
-    we_ve_checked_the_box = false
-    rate_options.merge(:insured_value => self.insurance_amount) if we_ve_checked_the_box
-    rate_options.merge(:cod_value => self.collect_on_delivery) if we_ve_checked_the_box
-
+    we_ve_checked_the_box = true
+    rate_options = rate_options.merge({:insured_value => self.insurance_amount}) if we_ve_checked_the_box
+    # rate_options.merge({:cod_value => self.collect_on_delivery}) if we_ve_checked_the_box
     rate_options
   end
 
