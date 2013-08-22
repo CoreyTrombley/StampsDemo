@@ -69,5 +69,5 @@ end
 
 
 Then(/^I enter (\d+) bucks for insurance$/) do |amount|
-  fill_in "shipping_label[:insurance_ammount]", :with => amount
+  fill_in "shipping_label[insurance_amount]", :with => amount
 end
