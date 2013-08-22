@@ -66,3 +66,8 @@ end
 Given(/^I choose the "(.*?)" addon$/) do |add_on_codes|
   check "shipping_label_#{add_on_codes}"
 end
+
+
+Then(/^I enter (\d+) bucks for insurance$/) do |amount|
+  fill_in "shipping_label[:insurance_ammount]", :with => amount
+end

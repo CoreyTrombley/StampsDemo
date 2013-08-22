@@ -14,7 +14,7 @@ class ShippingLabel < ActiveRecord::Base
     @add_on_codes || []
   end
 
-  attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type, :insurance_ammount, :collect_on_delivery, :add_on_codes
+  attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type, :insurance_amount, :collect_on_delivery, :add_on_codes
 
   accepts_nested_attributes_for :from_address, :to_address
 
@@ -37,7 +37,23 @@ class ShippingLabel < ActiveRecord::Base
 
   def make_label
     # Makes a call to the Stamps API with valid data to create a label
-    opts = {
+    stamp = Stamps.create!(label_options)
+
+    # Saves the label url in the data base.
+    # if stamp[:errors]
+    stamp[:errors].each do |msg|
+      self.errors.add(:service_type, msg)
+    end
+    # else
+    self.label_url = stamp[:url]
+    # end
+
+    return self.errors.empty?
+  end
+
+  private
+  def label_options
+    {
       :transaction_id  => Time.now.strftime("%m%d%Y%I%M%S"),
       :tracking_number => true,
       :to               => {
@@ -54,38 +70,23 @@ class ShippingLabel < ActiveRecord::Base
         :state              => self.from_address.state,
         :zip_code           => self.from_address.zip_code
       },
-      :rate =>  get_rates.merge(:add_ons => {
-        :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
-      })
-      # :rate             => {
-      #   :from_zip_code      => self.from_address.zip_code,
-      #   :to_zip_code        => self.to_address.zip_code,
-      #   :weight_oz          => self.weight,
-      #   :ship_date          => self.ship_date,
-      #   :package_type       => self.item,
-      #   :service_type       => self.service_type,
+      :rate =>  self.rate.merge(rate_options)
+    }
+  end
 
-      #   # ALERT: These may need to be integers
-      #   # :insurance_ammount  => self.insurance_ammount,
-      #   # :cod_value          => self.collect_on_delivery
-      #   :add_ons => {
-      #     :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
-      #   }
-      # }
+  def rate_options
+    rate_options = {
+      :add_ons => {
+        :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
+      }
     }
 
-    stamp = Stamps.create!(opts)
+    # Change this to be something else...
+    we_ve_checked_the_box = false
+    rate_options.merge(:insured_value => self.insurance_amount) if we_ve_checked_the_box
+    rate_options.merge(:cod_value => self.collect_on_delivery) if we_ve_checked_the_box
 
-    # Saves the label url in the data base.
-
-    if stamp[:errors]
-      stamp[:errors].each do |msg|
-        self.errors.add(:service_type, msg)
-      end
-    else
-      self.label_url = stamp[:url]
-    end
-
-    return self.errors.empty?
+    rate_options
   end
+
 end

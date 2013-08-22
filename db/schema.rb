@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(:version => 20130814140105) do
     t.string   "service_type"
     t.integer  "from_address_id"
     t.integer  "to_address_id"
-    t.string   "collect_on_delivery"
-    t.string   "insurance_ammount"
+    t.float    "collect_on_delivery"
+    t.float    "insurance_amount"
   end
 
   create_table "shipping_rates", :force => true do |t|

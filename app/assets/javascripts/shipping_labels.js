@@ -2,27 +2,26 @@
 // All this logic will automatically be available in application.js.
 
 $(document).ready(function(){
-
-  // $('#shipping_label_weight').focusout(function(){
-  //   console.log("Fired off");
-  //   $.ajax('/getaddons').append('#add_ons');
-  // });
-
-    var update_add_ons;
-    $('#shipping_label_weight').blur(function() {
-      $.ajax({
-        // TODO - fix the routes so there is a POST to add_on_lookup
-        url: '/getrates',
-        type: 'post',
-        data: $('form').serialize(),
-        success: function(data) {
-          $('#add_ons').html(data);
-        },
-        error: function() {
-          // raise error
-        }
-      });
+  var update_add_ons;
+  $('#shipping_label_weight').blur(function(){
+    $.ajax({
+      url: '/getrates',
+      type: 'post',
+      data: $('form').serialize(),
+      success: function(data) {
+        $('#add_ons').html(data);
+        $('.insurance').hide();
+        $('.cod').hide();
+        $('#shipping_label_US-A-INS').click(function(){
+          $('.insurance').toggle();
+        });
+        $('#shipping_label_US-A-COD').click(function(){
+          $('.cod').toggle();
+        });
+      },
+      error: function(){
+        // raise error
+      }
     });
-
-
+  });
 });
