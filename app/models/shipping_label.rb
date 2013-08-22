@@ -6,6 +6,8 @@ class ShippingLabel < ActiveRecord::Base
   belongs_to :to_address, :class_name => 'Address', :foreign_key => :to_address_id
   belongs_to :shipping_rate #TODO - Make a model called ShippingRate
 
+
+  attr_accessor :rate
   attr_writer :add_on_codes
 
   def add_on_codes

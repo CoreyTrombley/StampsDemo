@@ -1,6 +1,6 @@
 @javascript
 Feature: Print Shipping Label
-  @wip
+  
   Scenario: A customer prints a shipping label
     Given I am on the shipping label printing page
       And I choose "USPS Parcel Select" as my service type
@@ -22,7 +22,7 @@ Feature: Print Shipping Label
     When I press "Print Label"
     Then I should not see a shipping label
       And I should see "Required Add-On was missing for USPS_Return_Receipt"
-
+    
     Scenario: A customer prints a shipping label and chooses a mandatory add on
       Given I am on the shipping label printing page
         And I choose "USPS Parcel Select" as my service type

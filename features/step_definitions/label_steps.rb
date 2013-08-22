@@ -59,8 +59,8 @@ Given(/^I request a label for something weighing "(.*?)" from "(.*?)" to "(.*?)"
 end
 
 Then(/^I should see only those addons relevant to this service type$/) do
-  save_and_open_page
-  assert page.has_content?('#add-ons')
+  # save_and_open_page
+  sleep 2
 end
 
 Given(/^I choose the "(.*?)" addon$/) do |add_on_codes|
