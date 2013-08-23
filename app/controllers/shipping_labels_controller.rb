@@ -94,6 +94,6 @@ class ShippingLabelsController < ApplicationController
 
     # Render some JS which contains HTML with all the addon checkboxes
     # @shipping_label.rate[:add_ons][:add_on_v4]
-    render :partial => 'shipping_labels/add_ons', :locals => { :add_on_codes => @shipping_label[:add_ons][:add_ons_v4] }
+    render :partial => 'shipping_labels/add_ons', :locals => { :add_on_codes => @shipping_label.available_add_ons }
   end
 end

@@ -1,33 +1,30 @@
 <%= fields_for @shipping_label do |f| %>
-	<% add_on_codes.each do |add_on_code| %>
-	  <div id ="<%= add_on_code[:add_on_type] %>">
-		  <%= f.check_box :add_on_codes, { :id => "shipping_label_#{add_on_code[:add_on_type]}", :name => :"shipping_label[add_on_codes][]" }, add_on_code[:add_on_type], nil %>
-	    <%= f.label add_on_code[:add_on_type], Stamps::Types::ADD_ONS[add_on_code[:add_on_type]] %>
+	<% @shipping_label.available_add_ons.each do |add_on_code| %>
+	  <div id ="<%= add_on_code %>">
+		  <%= f.check_box :add_on_codes, { :id => "shipping_label_#{add_on_code}", :name => :"shipping_label[add_on_codes][]" }, add_on_code, nil %>
+	    <%= f.label add_on_code, Stamps::Types::ADD_ONS[add_on_code] %>
     </div>
-    <% if add_on_code[:add_on_type] == "US-A-INS" %>
+
+    <% if add_on_code == "US-A-INS" %>
       <div class="insurance">
         <%= f.label :insurance_amount %><br>
         <%= f.text_field :insurance_amount %>
       </div>
     <% end %>
-    <% if add_on_code[:add_on_type] == "US-A-COD" %>
+    <% if add_on_code == "US-A-COD" %>
       <div class="cod">
         <%= f.label :collect_on_delivery, "COD amount" %><br>
         <%= f.text_field :collect_on_delivery %>
       </div>
     <% end %>
-
-    <%= f.hidden_field :"shipping_label[available_add_ons][]", add_on_code %>
+    <%= f.hidden_field :available_add_ons, :name => :"shipping_label[:available_add_ons][]", :value => add_on_code %>
 	<% end %>
 
   <!-- TODO persist this info by sending it in the main form as hidden fields -->
-  <%= @required_add_ons.each do |blah| %>
-    <%= f.hidden_field :prohibited_add_ons, [] %>
-
+  <% @shipping_label.prohibited_add_ons.each do |code| %>
+    <%= f.hidden_field :prohibited_add_ons, :name => :"shipping_label[:prohibited_add_ons][]", :value => code %>
   <% end %>
-
-  <%= f.hidden_field :required_add_ons, ['hello', 'there'] %>
-
-
-
+  <% @shipping_label.required_add_ons.each do |code| %>
+    <%= f.hidden_field :required_add_ons, :name => :"shipping_label[:required_add_ons][]", :value => code %>
+  <% end %>
 <% end %>

@@ -18,7 +18,7 @@ class ShippingLabel < ActiveRecord::Base
   def add_on_codes
     @add_on_codes || []
   end
-
+  attr_accessible :prohibited_add_ons, :required_add_ons, :available_add_ons
   attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type, :insurance_amount, :collect_on_delivery, :add_on_codes
 
   accepts_nested_attributes_for :from_address, :to_address
@@ -38,6 +38,10 @@ class ShippingLabel < ActiveRecord::Base
       :package_type  => self.item
     )
     self.rate = rates.first
+    self.prohibited_add_ons = prohibited_addons
+    self.required_add_ons = required_addons
+    self.available_add_ons = available_addons
+
   end
 
   def make_label
@@ -101,4 +105,41 @@ class ShippingLabel < ActiveRecord::Base
     rate_options
   end
 
+  def available_addons
+    array = []
+    rate[:add_ons][:add_on_v4].each do |add_on|
+      available = add_on[:add_on_type]
+      available = [available] if available.is_a?(String)
+      available.each do |code|
+        array << code
+      end
+    end
+    array
+  end
+  def required_addons
+    array = []
+    rate[:add_ons][:add_on_v4].each do |add_on|
+      if add_on[:requires_all_of]
+        required = add_on[:requires_all_of][:requires_one_of][:add_on_type_v4]
+        required = [required] if required.is_a?(String)
+        required.each do |code|
+          array << code
+        end
+      end
+    end
+    array.uniq!
+  end
+  def prohibited_addons
+    array = []
+    rate[:add_ons][:add_on_v4].each do |add_on|
+      if add_on[:prohibited_with_any_of]
+        prohibited = add_on[:prohibited_with_any_of][:add_on_type_v4]
+        prohibited = [prohibited] if prohibited.is_a?(String)
+        prohibited.each do |code|
+          array << code
+        end
+      end
+    end
+    array.uniq!
+  end
 end

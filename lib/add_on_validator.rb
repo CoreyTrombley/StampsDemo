@@ -23,5 +23,5 @@ class AddOnValidator < ActiveModel::Validator
     #     end
     #   end
     # end
-  # end
+  end
 end
