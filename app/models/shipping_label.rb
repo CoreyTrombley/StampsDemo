@@ -6,19 +6,22 @@ class ShippingLabel < ActiveRecord::Base
   belongs_to :to_address, :class_name => 'Address', :foreign_key => :to_address_id
   belongs_to :shipping_rate #TODO - Make a model called ShippingRate
 
-
   attr_accessor :rate
   # Need to persist that in the case of failed validation....
-  attr_accessor :available_add_ons
-  attr_accessor :required_add_ons
-  attr_accessor :prohibited_add_ons
 
+  # All the available add ons for the given rate from the API
+  attr_reader :available_add_ons
+  def available_add_ons=(params)
+    @available_add_ons = params
+  end
+
+  # The add on codes the merchant has selected
   attr_writer :add_on_codes
-
   def add_on_codes
     @add_on_codes || []
   end
-  attr_accessible :prohibited_add_ons, :required_add_ons, :available_add_ons
+
+  attr_accessible :available_add_ons
   attr_accessible :from, :item, :to, :weight, :label_url, :from_address_attributes, :to_address_attributes, :ship_date, :service_type, :insurance_amount, :collect_on_delivery, :add_on_codes
 
   accepts_nested_attributes_for :from_address, :to_address
@@ -38,8 +41,8 @@ class ShippingLabel < ActiveRecord::Base
       :package_type  => self.item
     )
     self.rate = rates.first
-    self.prohibited_add_ons = prohibited_addons
-    self.required_add_ons = required_addons
+    # self.prohibited_add_ons = prohibited_addons
+    # self.required_add_ons = required_addons
     self.available_add_ons = available_addons
 
   end
@@ -60,6 +63,57 @@ class ShippingLabel < ActiveRecord::Base
 
     return self.errors.empty?
   end
+
+  def available_addons
+    hash = Hash.new
+    rate[:add_ons][:add_on_v4].each do |add_on|
+      available = add_on[:add_on_type]
+      available = [available] if available.is_a?(String)
+      if add_on[:requires_all_of]
+        required = add_on[:requires_all_of][:requires_one_of][:add_on_type_v4]
+        required = [required] if required.is_a?(String)
+      end
+      if add_on[:prohibited_with_any_of]
+        prohibited = add_on[:prohibited_with_any_of][:add_on_type_v4]
+        prohibited = [prohibited] if prohibited.is_a?(String)
+      end
+
+      available.each do |code|
+        add_on = Hash.new
+        add_on["required_add_ons"] = required unless required.blank?
+        add_on["prohibited_add_ons"] = prohibited unless prohibited.blank?
+        hash[code] = add_on
+      end
+    end
+    
+  end
+
+  # def required_addons
+  #   array = []
+  #   rate[:add_ons][:add_on_v4].each do |add_on|
+  #     if add_on[:requires_all_of]
+  #       required = add_on[:requires_all_of][:requires_one_of][:add_on_type_v4]
+  #       required = [required] if required.is_a?(String)
+  #       required.each do |code|
+  #         array << code
+  #       end
+  #     end
+  #   end
+  #   array.uniq!
+  # end
+  # def prohibited_addons
+  #   array = []
+  #   rate[:add_ons][:add_on_v4].each do |add_on|
+  #     if add_on[:prohibited_with_any_of]
+  #       prohibited = add_on[:prohibited_with_any_of][:add_on_type_v4]
+  #       prohibited = [prohibited] if prohibited.is_a?(String)
+  #       prohibited.each do |code|
+  #         array << code
+  #       end
+  #     end
+  #   end
+  #   array.uniq!
+  # end
 
   private
   def label_options
@@ -97,49 +151,8 @@ class ShippingLabel < ActiveRecord::Base
         :add_on_v4 => self.add_on_codes.map {|code| { :add_on_type => code } }
       }
     }
-
-    # Change this to be something else...
-    we_ve_checked_the_box = true
-    rate_options = rate_options.merge({:insured_value => self.insurance_amount}) if we_ve_checked_the_box
-    # rate_options.merge({:cod_value => self.collect_on_delivery}) if we_ve_checked_the_box
+    rate_options = rate_options.merge({:insured_value => self.insurance_amount}) if self.add_on_codes.include? "US-A-INS"
+    rate_options = rate_options.merge({:cod_value => self.collect_on_delivery}) if self.add_on_codes.include? "US-A-COD"
     rate_options
-  end
-
-  def available_addons
-    array = []
-    rate[:add_ons][:add_on_v4].each do |add_on|
-      available = add_on[:add_on_type]
-      available = [available] if available.is_a?(String)
-      available.each do |code|
-        array << code
-      end
-    end
-    array
-  end
-  def required_addons
-    array = []
-    rate[:add_ons][:add_on_v4].each do |add_on|
-      if add_on[:requires_all_of]
-        required = add_on[:requires_all_of][:requires_one_of][:add_on_type_v4]
-        required = [required] if required.is_a?(String)
-        required.each do |code|
-          array << code
-        end
-      end
-    end
-    array.uniq!
-  end
-  def prohibited_addons
-    array = []
-    rate[:add_ons][:add_on_v4].each do |add_on|
-      if add_on[:prohibited_with_any_of]
-        prohibited = add_on[:prohibited_with_any_of][:add_on_type_v4]
-        prohibited = [prohibited] if prohibited.is_a?(String)
-        prohibited.each do |code|
-          array << code
-        end
-      end
-    end
-    array.uniq!
   end
 end
