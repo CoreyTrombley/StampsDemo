@@ -19,13 +19,13 @@
       </div>
     <% end %>
     
-    <% unless add_on["required_add_ons"].blank? %>
+    <% if add_on["required_add_ons"] %>
       <% add_on["required_add_ons"].each do |r| %>
         <%= f.hidden_field :available_add_ons, :name => "shipping_label[available_add_ons][" + code + "][required_add_ons][]", :value => r %>
       <% end %>
     <% end %>
 
-    <% unless add_on["prohibited_add_ons"].blank? %>
+    <% if add_on["prohibited_add_ons"] %>
       <% add_on["prohibited_add_ons"].each do |p| %>
         <%= f.hidden_field :available_add_ons, :name => "shipping_label[available_add_ons][" + code + "][prohibited_add_ons][]", :value => p %>
   	  <% end %>

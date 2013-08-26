@@ -53,13 +53,13 @@ class ShippingLabel < ActiveRecord::Base
     stamp = Stamps.create!(label_options)
 
     # Saves the label url in the data base.
-    # if stamp[:errors]
-    stamp[:errors].each do |msg|
-      self.errors.add(:service_type, msg)
+    if stamp[:errors]
+      stamp[:errors].each do |msg|
+        self.errors.add(:service_type, msg)
+      end
+    else
+      self.label_url = stamp[:url]
     end
-    # else
-    self.label_url = stamp[:url]
-    # end
 
     return self.errors.empty?
   end
@@ -85,7 +85,7 @@ class ShippingLabel < ActiveRecord::Base
         hash[code] = add_on
       end
     end
-    
+    hash
   end
 
   # def required_addons

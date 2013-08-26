@@ -33,7 +33,7 @@ Then /^I should see a shipping label$/ do
   # somewhere on the view for now, and have a regexp to see that there is an image
   # in a box or somthing...
   # Testing to check for img tag. Make sure I am on the correct page
-  save_and_open_page
+  # save_and_open_page
   # assert page.has_content?('<img>'), "Expected an img tag, but didn't one..."
   assert page.should have_xpath("//img[@alt='Label-200']")
 end
@@ -48,8 +48,8 @@ Then(/^I should not see a shipping label$/) do
 
 end
 
-Then(/^I should see "(.*?)"$/) do |error|
-  assert page.has_content?(error)
+Then(/^I should see an error telling me to select a mandatory add on$/) do
+  assert page.has_content?("You must include one of the following add ons: Collect on Delivery, Registered Mail, Certified Mail, USPS Insurance")
 end
 
 Given(/^I request a label for something weighing "(.*?)" from "(.*?)" to "(.*?)"$/) do |weight, from_zip_code, to_zip_code|

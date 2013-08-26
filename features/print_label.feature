@@ -9,7 +9,7 @@ Feature: Print Shipping Label
       And I choose the "US-A-DC" addon
     When I press "Print Label"
     Then I should see a shipping label
-
+  
    Scenario: A customer prints a shipping label without choosing a mandatory add-on
     Given I am on the shipping label printing page
       And I choose "USPS Parcel Select" as my service type
@@ -19,7 +19,7 @@ Feature: Print Shipping Label
       And I choose the "US-A-RR" addon
     When I press "Print Label"
     Then I should not see a shipping label
-      And I should see "Required Add-On was missing for USPS_Return_Receipt"
+      And I should see an error telling me to select a mandatory add on
 
     Scenario: A customer prints a shipping label and chooses a mandatory add on
       Given I am on the shipping label printing page
@@ -31,7 +31,7 @@ Feature: Print Shipping Label
       When I press "Print Label"
       Then I should see a shipping label
 
-    @wip
+    
     Scenario: A customer prints a shipping label and inputs an amount of insurance
       Given I am on the shipping label printing page
         And I choose "USPS Parcel Select" as my service type
