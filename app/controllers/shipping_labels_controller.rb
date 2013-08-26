@@ -88,12 +88,9 @@ class ShippingLabelsController < ApplicationController
     @shipping_label = ShippingLabel.new(params[:shipping_label])
 
     # Find the rates from the API
-    @shipping_rate = @shipping_label.get_rates
-
-    # Find the available dd ons and the ruquired add ons and the prohibite add ons
+    @shipping_label.get_rates
 
     # Render some JS which contains HTML with all the addon checkboxes
-    # @shipping_label.rate[:add_ons][:add_on_v4]
     render :partial => 'shipping_labels/add_ons', :locals => { :add_on_codes => @shipping_label.available_add_ons }
   end
 end
