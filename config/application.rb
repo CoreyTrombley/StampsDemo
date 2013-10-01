@@ -69,9 +69,9 @@ module StampsDemo
     # This is the Stamps.com User Account info, Needed to make calls to the stamps api.
     # Authenticate you stamps.com credentials
     Stamps.configure do |config|
-      config.integration_id = 'b6c55973-460a-4892-ae91-97e125f7a2bf'
-      config.username       = 'tormbley'
-      config.password       = 'postage1'
+      config.integration_id = 'INTEGRATION_ID'
+      config.username       = 'USERNAME'
+      config.password       = 'PASSWORD'
       config.endpoint       = "http://swsim.testing.stamps.com/swsim/swsimv29.asmx"
       config.namespace      = "http://stamps.com/xml/namespace/2013/05/swsim/swsimv29"
     end
